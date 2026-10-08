@@ -4,14 +4,14 @@
 #include <Arduino.h>
 #include <Servo.h>
 
-// --- Pins par defaut (modifiables via constructeur) ---
+//  Pins par defaut (modifiables via constructeur) 
 #define ARM_DEFAULT_PIN_BASE      9
 #define ARM_DEFAULT_PIN_SHOULDER  10
 #define ARM_DEFAULT_PIN_ELBOW     11
 #define ARM_DEFAULT_PIN_GRIPPER   12
 #define ARM_GRIPPER_FORCE_PIN     A0   // capteur de force dans la pince
 
-// --- Limites angulaires par articulation (degres) ---
+//  Limites angulaires par articulation (degres) 
 #define BASE_MIN       0
 #define BASE_MAX       180
 #define SHOULDER_MIN   25
@@ -21,18 +21,18 @@
 #define GRIPPER_MIN    15    // ouvert a fond
 #define GRIPPER_MAX    140   // ferme a fond
 
-// --- Vitesses de deplacement (ms par degre) ---
+// Vitesses de deplacement (ms par degre) 
 #define ARM_SPEED_SLOW    30
 #define ARM_SPEED_NORMAL  15
 #define ARM_SPEED_FAST    6
 
-// --- Pince ---
+// Pince 
 #define GRIPPER_OPEN_ANGLE    20
 #define GRIPPER_CLOSED_ANGLE  130
 #define GRIPPER_FORCE_THRESHOLD  400  // seuil analogique = objet detecte
 #define GRIPPER_FORCE_MAX        800  // au-dela on arrete pour pas casser
 
-// --- Securite ---
+// Securite 
 #define ARM_MOVE_TIMEOUT_MS  5000  // si un mouvement prend plus de 5s, on arrete
 
 // Position d'une articulation : 4 angles + etat pince
@@ -156,7 +156,7 @@ public:
     void setSpeedNormal() { moveSpeed = ARM_SPEED_NORMAL; }
     void setSpeedFast()   { moveSpeed = ARM_SPEED_FAST; }
 
-    // --- Arret d'urgence ---
+    // Arret d'urgence
     void emergencyStop() {
         stopped = true;
         state = ARM_EMERGENCY_STOP;
@@ -170,7 +170,7 @@ public:
 
     bool isStopped() { return stopped; }
 
-    // --- Mouvement individuel par articulation ---
+    // Mouvement individuel par articulation
     bool moveBase(int angle) {
         if (stopped) return false;
         state = ARM_MOVING;
@@ -198,7 +198,7 @@ public:
         return ok;
     }
 
-    // --- Mouvement interpole vers une position cible ---
+    // Mouvement interpole vers une position cible 
     // Deplace toutes les articulations en parallele (pas de vrai parallele
     // sur Arduino, mais on alterne les pas pour un mouvement coordonne)
     bool moveTo(const ArmPosition &target) {
@@ -264,13 +264,13 @@ public:
         return true;
     }
 
-    // --- Positions nommees ---
+    // Positions nommees 
     bool goHome()      { gripperHolding = false; return moveTo(POS_HOME); }
     bool goRest()      { gripperHolding = false; return moveTo(POS_REST); }
     bool goCompact()   { return moveTo(POS_COMPACT); }
     bool goTransport() { return moveTo(POS_TRANSPORT); }
 
-    // --- Pince ---
+    // Pince 
     // Ferme progressivement jusqu'a detecter un objet ou atteindre la limite
     bool gripperClose() {
         if (stopped) return false;
@@ -318,7 +318,7 @@ public:
 
     bool isHoldingObject() { return gripperHolding; }
 
-    // --- Sequences completes ---
+    // Sequences completes 
 
     // Ramasser un objet au sol devant le robot
     bool pickObject() {
@@ -368,7 +368,7 @@ public:
         return true;
     }
 
-    // --- Calibration ---
+    // Calibration 
     // Parcourt lentement les limites de chaque axe
     void calibrate() {
         int savedSpeed = moveSpeed;
@@ -396,7 +396,7 @@ public:
         goHome();
     }
 
-    // --- Etat courant ---
+    // Etat courant 
     ArmPosition getCurrentPosition() {
         ArmPosition pos;
         pos.base = curBase;
