@@ -2,7 +2,7 @@
 
 Système robotique monté sur fauteuil roulant pour aider les personnes à mobilité réduite dans leurs tâches quotidiennes : préhension d'objets, détection d'obstacles, interactions vocales et pilotage par télécommande.
 
-Projet réalisé chez Flaster Group (Agadir, Maroc) — Juin à Septembre 2023
+Projet réalisé chez Flaster Group, de Juin à Septembre 2023
 
 ## Fonctionnalités
 
